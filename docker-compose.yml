@@ -1,0 +1,96 @@
+#version: '2'
+#services:
+#  zookeeper:
+#    image: wurstmeister/zookeeper:latest
+#    ports:
+#      - "2181:2181"
+#  kafka:
+#    image: wurstmeister/kafka:2.11-1.1.1
+#    ports:
+#      - "9092:9092"
+#    links:
+#      - zookeeper
+#    environment:
+#      KAFKA_ADVERTISED_HOST_NAME: ${HOST_IP}
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+#      KAFKA_DELETE_TOPIC_ENABLE: 'true'
+#      KAFKA_CREATE_TOPICS: "topic-test:1:1"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+
+version: "2"
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: buettner123/zookeeper:1.0.1
+    build:
+      args:
+        - kafka_version=$KAFKA_VERSION
+        - scala_version=$SCALA_VERSION
+        - kafka_home=$KAFKA_HOME
+      context: ./zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - KAFKA_HOME=$KAFKA_HOME
+    volumes:
+      - ./config/zookeeper.properties:$KAFKA_HOME/config/zookeeper.properties
+      - /tmp/zookeeper/:/tmp/zookeeper/
+    networks:
+      - kafka
+  broker-1:
+    image: buettner123/broker:1.0.9
+    build:
+      args:
+        - kafka_version=$KAFKA_VERSION
+        - scala_version=$SCALA_VERSION
+        - kafka_home=$KAFKA_HOME
+      context: ./broker
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_HOME=$KAFKA_HOME
+    volumes:
+      - ./config/broker-1.properties:$KAFKA_HOME/config/server.properties
+      - /tmp/kafka-1/:/tmp/kafka-logs/
+    networks:
+      - kafka
+  broker-2:
+    image: buettner123/broker:1.0.9
+    build:
+      args:
+        - kafka_version=$KAFKA_VERSION
+        - scala_version=$SCALA_VERSION
+        - kafka_home=$KAFKA_HOME
+      context: ./broker
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_HOME=$KAFKA_HOME
+    volumes:
+      - ./config/broker-2.properties:$KAFKA_HOME/config/server.properties
+      - /tmp/kafka-2/:/tmp/kafka-logs/
+    networks:
+      - kafka
+  broker-3:
+    image: buettner123/broker:1.0.9
+    build:
+      args:
+        - kafka_version=$KAFKA_VERSION
+        - scala_version=$SCALA_VERSION
+        - kafka_home=$KAFKA_HOME
+      context: ./broker
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_HOME=$KAFKA_HOME
+    volumes:
+      - ./config/broker-3.properties:$KAFKA_HOME/config/server.properties
+      - /tmp/kafka-3/:/tmp/kafka-logs/
+    networks:
+      - kafka
+
+networks:
+  kafka:
+    name: kafka
