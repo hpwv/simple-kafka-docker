@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 
 ARG kafka_version=3.0.0
 ARG kafka_home=/opt/kafka

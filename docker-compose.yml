@@ -2,7 +2,7 @@ version: "2"
 services:
   zookeeper:
     container_name: zookeeper
-    image: buettner123/zookeeper:1.0.1
+    image: buettner123/zookeeper:1.1.0
     build:
       args:
         - kafka_version=$KAFKA_VERSION
@@ -19,7 +19,7 @@ services:
     networks:
       - kafka
   broker-1:
-    image: buettner123/broker:1.0.9
+    image: buettner123/broker:1.1.0
     build:
       args:
         - kafka_version=$KAFKA_VERSION
@@ -36,7 +36,7 @@ services:
     networks:
       - kafka
   broker-2:
-    image: buettner123/broker:1.0.9
+    image: buettner123/broker:1.1.0
     build:
       args:
         - kafka_version=$KAFKA_VERSION
@@ -53,7 +53,7 @@ services:
     networks:
       - kafka
   broker-3:
-    image: buettner123/broker:1.0.9
+    image: buettner123/broker:1.1.0
     build:
       args:
         - kafka_version=$KAFKA_VERSION
