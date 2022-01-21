@@ -1,0 +1,15 @@
+services:
+  broker:
+    image: buettner123/broker
+    build:
+      args:
+        - kafka_version=$KAFKA_VERSION
+        - scala_version=$SCALA_VERSION
+        - kafka_home=$KAFKA_HOME
+      context: ./broker
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_HOME=$KAFKA_HOME
+    networks:
+      - kafka
