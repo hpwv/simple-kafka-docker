@@ -14,7 +14,6 @@ services:
       - KAFKA_HOME=$KAFKA_HOME
     volumes:
       - ./config/zookeeper.properties:$KAFKA_HOME/config/zookeeper.properties
-      - /tmp/zookeeper/:/tmp/zookeeper/
     networks:
       - kafka
   broker-1:
@@ -23,21 +22,18 @@ services:
       service: broker
     volumes:
       - ./config/broker-1.properties:$KAFKA_HOME/config/server.properties
-      - /tmp/kafka-1/:/tmp/kafka-logs/
   broker-2:
     extends:
       file: broker-base.yml
       service: broker
     volumes:
       - ./config/broker-2.properties:$KAFKA_HOME/config/server.properties
-      - /tmp/kafka-2/:/tmp/kafka-logs/
   broker-3:
     extends:
       file: broker-base.yml
       service: broker
     volumes:
       - ./config/broker-3.properties:$KAFKA_HOME/config/server.properties
-      - /tmp/kafka-3/:/tmp/kafka-logs/
 
 networks:
   kafka:
