@@ -1,4 +1,7 @@
 # Kafka Cluster
+## Introduction
+This is a simple kafka cluster consisting of three brokers, run in docker.
+It is part of the HPWV prototype.
 
 ## Preparation
 
