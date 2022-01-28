@@ -17,18 +17,21 @@ services:
     networks:
       - kafka
   broker-1:
+    hostname: kafka-broker-1-1
     extends:
       file: broker-base.yml
       service: broker
     volumes:
       - ./config/broker-1.properties:$KAFKA_HOME/config/server.properties
   broker-2:
+    hostname: kafka-broker-2-1
     extends:
       file: broker-base.yml
       service: broker
     volumes:
       - ./config/broker-2.properties:$KAFKA_HOME/config/server.properties
   broker-3:
+    hostname: kafka-broker-3-1
     extends:
       file: broker-base.yml
       service: broker
